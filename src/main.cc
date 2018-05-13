@@ -20,8 +20,8 @@
 
 using Gradient = woops::DenseStorage<float>;
 
-constexpr int SIZE = 1000;
-constexpr int NUM_TABLE = 1000;
+constexpr int SIZE = 3;
+constexpr int NUM_TABLE = 3;
 constexpr int MAX_ITER = 5;
 int main()
 {
@@ -55,7 +55,7 @@ int main()
         woops::LocalAssign(j, Gradient(a));
     }
     woops::Start();
-    //std::cout << woops::ToString() << std::endl;
+    std::cout << woops::ToString() << std::endl;
     std::fill(a.begin(), a.end(), 1);
     for(int i = 0; i < MAX_ITER; ++i) {
         std::cout << "iteration: " << i << std::endl;
@@ -68,5 +68,5 @@ int main()
     for (int j = 0; j < NUM_TABLE; ++j) {
         woops::Sync(j);
     }
-    //std::cout << woops::ToString() << std::endl;
+    std::cout << woops::ToString() << std::endl;
 }
