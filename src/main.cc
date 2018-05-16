@@ -8,7 +8,7 @@
 #include "util/storage/dense_storage.h"
 #include "util/logging.h"
 
-#include "storage/client_storage.h"
+#include "storage/worker_storage.h"
 #include "storage/transmit_buffer.h"
 #include "storage/server_storage.h"
 #include "storage/apply_buffer.h"
@@ -32,19 +32,24 @@ int main()
         table_config.id = i;
         table_config.size = SIZE;
         table_config.element_size = sizeof(float);
-        table_config.client_storage_constructor = []() -> woops::Storage*{
-            return new woops::ClientStorage<float>(SIZE);
+        
+        table_config.worker_storage_constructor = []() -> woops::Storage*{
+            return new woops::WorkerStorage<float>(SIZE);
                        
         };
+
         table_config.transmit_buffer_constructor = []() -> woops::Storage* {
             return new woops::TransmitBuffer<float>(SIZE);
         };
+
         table_config.server_storage_constructor = []() -> woops::Storage*{
             return new woops::ServerStorage<float>(SIZE);
         };
+
         table_config.apply_buffer_constructor = []() -> woops::Storage*{
             return new woops::ApplyBuffer<float>(SIZE);
         };
+
         woops::CreateTable(table_config);
     }
     std::vector<float> a(SIZE);
