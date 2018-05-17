@@ -22,8 +22,10 @@ public:
         this->zerofy();
         return ret;
     }
+
     void Decode(
-            MAYBE_UNUSED Hostid host,
+            MAYBE_UNUSED Hostid from,
+            MAYBE_UNUSED Hostid to,
             const Bytes& bytes) override {
         const T* data = reinterpret_cast<const T*>(bytes.data());
         size_t size = bytes.size() / sizeof(T);

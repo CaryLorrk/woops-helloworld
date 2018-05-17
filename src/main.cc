@@ -8,20 +8,20 @@
 #include "util/storage/dense_storage.h"
 #include "util/logging.h"
 
-//#include "storage/worker_storage.h"
-//#include "storage/transmit_buffer.h"
-//#include "storage/server_storage.h"
-//#include "storage/apply_buffer.h"
+#include "storage/worker_storage.h"
+#include "storage/transmit_buffer.h"
+#include "storage/server_storage.h"
+#include "storage/apply_buffer.h"
 
-#include "storage/compress/worker_storage.h"
-#include "storage/compress/transmit_buffer.h"
-#include "storage/compress/server_storage.h"
-#include "storage/compress/apply_buffer.h"
+//#include "storage/compress/worker_storage.h"
+//#include "storage/compress/transmit_buffer.h"
+//#include "storage/compress/server_storage.h"
+//#include "storage/compress/apply_buffer.h"
 
 using Gradient = woops::DenseStorage<float>;
 
-constexpr int SIZE = 3;
-constexpr int NUM_TABLE = 3;
+constexpr int SIZE = 10;
+constexpr int NUM_TABLE = 2;
 constexpr int MAX_ITER = 5;
 int main()
 {

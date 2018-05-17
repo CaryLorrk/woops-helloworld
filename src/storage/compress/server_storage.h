@@ -31,7 +31,8 @@ public:
         return ret;
     }
     void Decode(
-            MAYBE_UNUSED Hostid host,
+            MAYBE_UNUSED Hostid form,
+            MAYBE_UNUSED Hostid to,
             const Bytes& bytes) {
         std::lock_guard<std::mutex> lock(this->mu_);
         auto it = bytes.begin();
