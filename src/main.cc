@@ -8,15 +8,15 @@
 #include "util/storage/dense_storage.h"
 #include "util/logging.h"
 
-#include "storage/worker_storage.h"
-#include "storage/transmit_buffer.h"
-#include "storage/server_storage.h"
-#include "storage/apply_buffer.h"
+//#include "storage/worker_storage.h"
+//#include "storage/transmit_buffer.h"
+//#include "storage/server_storage.h"
+//#include "storage/apply_buffer.h"
 
-//#include "storage/compress/client_storage.h"
-//#include "storage/compress/transmit_buffer.h"
-//#include "storage/compress/server_storage.h"
-//#include "storage/compress/apply_buffer.h"
+#include "storage/compress/worker_storage.h"
+#include "storage/compress/transmit_buffer.h"
+#include "storage/compress/server_storage.h"
+#include "storage/compress/apply_buffer.h"
 
 using Gradient = woops::DenseStorage<float>;
 
@@ -33,20 +33,20 @@ int main()
         table_config.size = SIZE;
         table_config.element_size = sizeof(float);
         
-        table_config.worker_storage_constructor = []() -> woops::Storage*{
+        table_config.worker_storage_constructor = [](woops::Tableid){
             return new woops::WorkerStorage<float>(SIZE);
                        
         };
 
-        table_config.transmit_buffer_constructor = []() -> woops::Storage* {
+        table_config.transmit_buffer_constructor = [](woops::Tableid) {
             return new woops::TransmitBuffer<float>(SIZE);
         };
 
-        table_config.server_storage_constructor = []() -> woops::Storage*{
-            return new woops::ServerStorage<float>(SIZE);
+        table_config.server_storage_constructor = [](woops::Tableid id){
+            return new woops::ServerStorage<float>(id);
         };
 
-        table_config.apply_buffer_constructor = []() -> woops::Storage*{
+        table_config.apply_buffer_constructor = [](woops::Tableid) {
             return new woops::ApplyBuffer<float>(SIZE);
         };
 

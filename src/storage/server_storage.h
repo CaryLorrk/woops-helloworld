@@ -11,7 +11,11 @@ template<typename T>
 class ServerStorage: public DenseStorage<T>
 {
 public:
-    ServerStorage (size_t size): DenseStorage<T>(size) {}
+    ServerStorage (Tableid id) {
+        auto&& partition = Lib::Placement().GetPartitions(id).at(Lib::ThisHost());
+        this->data_.resize(partition.end - partition.begin);
+    }
+
     Bytes Encode() override {
         std::lock_guard<std::mutex> lock(this->mu_);
         Bytes ret = Bytes{(Byte*)this->data_.data(), this->data_.size() * sizeof(T)};
