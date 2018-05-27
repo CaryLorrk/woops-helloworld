@@ -13,7 +13,7 @@ class TransmitBuffer: public DenseStorage<T>
 public:
     TransmitBuffer(size_t size): DenseStorage<T>(size) {}
     std::map<Hostid, Bytes> Encode(const Placement::Partitions& partitions) override {
-        constexpr int COMPRESSION_RATIO = 2;
+        constexpr int COMPRESSION_RATIO = 100;
         std::lock_guard<std::mutex> lock(this->mu_);
         std::vector<ParamIndex> index(this->data_.size());
         std::iota(index.begin(), index.end(), 0);
@@ -23,9 +23,9 @@ public:
             auto&& data = this->data_;
             return std::abs(data[lhs]) > std::abs(data[rhs]);
         });
-        
-        std::sort(index.begin(), middle);
 
+        std::sort(index.begin(), middle);
+        
         std::map<Hostid, Bytes> ret;
         auto&& kv = partitions.begin();
         for (auto it = index.begin(); it != middle; ++it) {
